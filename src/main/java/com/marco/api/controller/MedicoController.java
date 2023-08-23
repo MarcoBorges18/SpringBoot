@@ -24,7 +24,7 @@ public class MedicoController{
 
     @GetMapping
     public Page<DadosListagemMedico> listar(@PageableDefault(page = 0, size = 10, sort = {"nome"}) Pageable pageable){
-        return repository.findAll(pageable).map(DadosListagemMedico::new);
+        return repository.findAllByAtivoTrue(pageable).map(DadosListagemMedico::new);
         /*
         Método Pageable permite a paginação no retorno Get podendo limitar a quantidade de registros que irão aparecer na tela do usuário
         @PageableDefault(size = 10, sort = {"nome"} faz com que a requisição disparada seja exibida por padrão com 10 registros por página e sendo ordenado pelo nome
@@ -37,6 +37,12 @@ public class MedicoController{
     public void atualizar(@RequestBody @Valid DadosAtualizarMedico dados){
         var medico = repository.getReferenceById(dados.id());
         medico.atualizarInformacoes(dados);
+    }
 
+    @DeleteMapping("/{id}")
+    @Transactional
+    public void excluir(@PathVariable Integer id){
+        var medico = repository.getReferenceById(id);
+        medico.excluir();
     }
 }
