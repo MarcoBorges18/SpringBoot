@@ -1,9 +1,6 @@
 package com.marco.api.controller;
 
-import com.marco.api.paciente.DadosCadastroPaciente;
-import com.marco.api.paciente.DadosListagemPaciente;
-import com.marco.api.paciente.Paciente;
-import com.marco.api.paciente.PacienteRepository;
+import com.marco.api.paciente.*;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +24,20 @@ public class PacienteController {
 
     @GetMapping
     public Page<DadosListagemPaciente> listar(@PageableDefault(page = 0, size = 10, sort = {"nome"}) Pageable pageable){
-        return repository.findAll(pageable).map(DadosListagemPaciente::new);
+        return repository.findAllByAtivoTrue(pageable).map(DadosListagemPaciente::new);
+    }
+
+    @PutMapping
+    @Transactional
+    public void atualizar(@RequestBody @Valid DadosAtualizarPaciente dados){
+        var paciente = repository.getReferenceById(dados.id());
+        paciente.atualizar(dados);
+    }
+
+    @DeleteMapping("{id}")
+    @Transactional
+    public void deletar(@PathVariable Integer id){
+        var paciente = repository.getReferenceById(id);
+        paciente.inativar();
     }
 }
