@@ -32,6 +32,7 @@ public class MedicoController{
         */
     }
 
+    //teste
     @PutMapping
     @Transactional
     public void atualizar(@RequestBody @Valid DadosAtualizarMedico dados){
