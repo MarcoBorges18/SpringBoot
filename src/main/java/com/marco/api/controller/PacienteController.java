@@ -30,7 +30,7 @@ public class PacienteController {
     @GetMapping("/{id}")
     public ResponseEntity listarUmPaciente(@PathVariable Integer id){
         Paciente paciente = repository.getReferenceById(id);
-        if(paciente.getAtivo()){
+       if(paciente.getAtivo()) {
             return ResponseEntity.ok(new DadosDetalhamentoPaciente(paciente));
         }else {
             return ResponseEntity.notFound().build();
@@ -52,6 +52,18 @@ public class PacienteController {
             return ResponseEntity.ok(new DadosDetalhamentoPaciente(paciente));
         }else{
             return  ResponseEntity.notFound().build();
+        }
+    }
+
+    @PutMapping("{id}")
+    @Transactional
+    public ResponseEntity ativarPaciente(@PathVariable Integer id){
+        var paciente = repository.getReferenceById(id);
+        if(!paciente.getAtivo()){
+            paciente.ativar();
+            return ResponseEntity.ok(new DadosDetalhamentoPaciente(paciente));
+        }else{
+            return ResponseEntity.notFound().build();
         }
     }
 

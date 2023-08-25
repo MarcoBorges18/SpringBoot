@@ -62,7 +62,18 @@ public class MedicoController{
         }else{
             return ResponseEntity.notFound().build();
         }
+    }
 
+    @PutMapping("{id}")
+    @Transactional
+    public ResponseEntity ativarMedico(@PathVariable Integer id){
+        Medico medico = repository.getReferenceById(id);
+        if(!medico.getAtivo()){
+            medico.ativar();
+            return ResponseEntity.ok(new DadosDetalhamentoMedico(medico));
+        }else{
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @DeleteMapping("/{id}")
