@@ -45,7 +45,7 @@ public class MedicoController{
     public ResponseEntity listarUmMedico(@PathVariable Integer id){
         var medico = repository.getReferenceById(id);
         if(medico.getAtivo()){
-            return ResponseEntity.ok(new DadosDetalhamentoMedico(medico));
+            return ResponseEntity.ok(new DadosListagemMedico(medico));
         }else{
             return ResponseEntity.notFound().build();
         }
