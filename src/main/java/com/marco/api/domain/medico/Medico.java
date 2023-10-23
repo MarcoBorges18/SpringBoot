@@ -1,7 +1,6 @@
-package com.marco.api.medico;
+package com.marco.api.domain.medico;
 
-import com.marco.api.endereco.DadosEndereco;
-import com.marco.api.endereco.Endereco;
+import com.marco.api.domain.endereco.Endereco;
 import jakarta.persistence.*;
 import lombok.*;
 

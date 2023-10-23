@@ -1,4 +1,4 @@
-package com.marco.api.medico;
+package com.marco.api.domain.medico;
 
 public record DadosListagemMedico(Integer id, String nome, String email, String crm, Especialidade especialidade) {
     public DadosListagemMedico(Medico medico){

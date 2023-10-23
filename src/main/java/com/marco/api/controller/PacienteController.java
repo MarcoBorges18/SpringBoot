@@ -1,6 +1,9 @@
 package com.marco.api.controller;
 
-import com.marco.api.paciente.*;
+import com.marco.api.domain.paciente.DadosListagemPaciente;
+import com.marco.api.domain.paciente.Paciente;
+import com.marco.api.domain.paciente.PacienteRepository;
+import com.marco.api.domain.paciente.*;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,11 +33,7 @@ public class PacienteController {
     @GetMapping("/{id}")
     public ResponseEntity listarUmPaciente(@PathVariable Integer id){
         Paciente paciente = repository.getReferenceById(id);
-       if(paciente.getAtivo()) {
-            return ResponseEntity.ok(new DadosDetalhamentoPaciente(paciente));
-        }else {
-            return ResponseEntity.notFound().build();
-        }
+        return ResponseEntity.ok(new DadosDetalhamentoPaciente(paciente));
     }
 
     @GetMapping
@@ -47,24 +46,16 @@ public class PacienteController {
     @Transactional
     public ResponseEntity atualizar(@RequestBody @Valid DadosAtualizarPaciente dados){
         var paciente = repository.getReferenceById(dados.id());
-        if(paciente.getAtivo()){
-            paciente.atualizar(dados);
-            return ResponseEntity.ok(new DadosDetalhamentoPaciente(paciente));
-        }else{
-            return  ResponseEntity.notFound().build();
-        }
+        paciente.atualizar(dados);
+        return ResponseEntity.ok(new DadosDetalhamentoPaciente(paciente));
     }
 
     @PutMapping("{id}")
     @Transactional
     public ResponseEntity ativarPaciente(@PathVariable Integer id){
         var paciente = repository.getReferenceById(id);
-        if(!paciente.getAtivo()){
-            paciente.ativar();
-            return ResponseEntity.ok(new DadosDetalhamentoPaciente(paciente));
-        }else{
-            return ResponseEntity.notFound().build();
-        }
+        paciente.ativar();
+        return ResponseEntity.ok(new DadosDetalhamentoPaciente(paciente));
     }
 
     @DeleteMapping("{id}")

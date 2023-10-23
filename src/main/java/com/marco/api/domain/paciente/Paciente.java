@@ -1,6 +1,6 @@
-package com.marco.api.paciente;
+package com.marco.api.domain.paciente;
 
-import com.marco.api.endereco.Endereco;
+import com.marco.api.domain.endereco.Endereco;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;

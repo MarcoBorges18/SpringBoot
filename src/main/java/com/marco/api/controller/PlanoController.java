@@ -1,6 +1,9 @@
 package com.marco.api.controller;
 
-import com.marco.api.plano.*;
+import com.marco.api.domain.plano.DadosListagemPlano;
+import com.marco.api.domain.plano.PlanoDeSaude;
+import com.marco.api.domain.plano.PlanoRepository;
+import com.marco.api.domain.plano.*;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,23 +40,15 @@ public class PlanoController {
     @GetMapping("/{id}")
     public ResponseEntity listarUm(@PathVariable Integer id){
         PlanoDeSaude plano = repository.getReferenceById(id);
-        if (plano.getDisponivel()){
-            return ResponseEntity.ok(new DadosListagemPlano(plano));
-        }else{
-            return ResponseEntity.notFound().build();
-        }
+        return ResponseEntity.ok(new DadosListagemPlano(plano));
     }
 
     @PutMapping
     @Transactional
     public ResponseEntity alterar(@RequestBody @Valid DadosDetalhamentoPlano dados){
         PlanoDeSaude plano = repository.getReferenceById(dados.id());
-        if (plano.getDisponivel()){
-            plano.atualizar(dados);
-            return ResponseEntity.ok(new DadosDetalhamentoPlano(plano));
-        }else{
-            return ResponseEntity.notFound().build();
-        }
+        plano.atualizar(dados);
+        return ResponseEntity.ok(new DadosDetalhamentoPlano(plano));
     }
 
     @PutMapping("/{id}")
@@ -61,7 +56,6 @@ public class PlanoController {
     public ResponseEntity ativarPlano(@PathVariable Integer id){
         PlanoDeSaude plano = repository.getReferenceById(id);
         plano.ativar();
-
         return ResponseEntity.ok(new DadosDetalhamentoPlano(plano));
     }
 
@@ -70,7 +64,6 @@ public class PlanoController {
     public ResponseEntity inativarPlano(@PathVariable Integer id){
         PlanoDeSaude plano = repository.getReferenceById(id);
         plano.inativar();
-
         return ResponseEntity.noContent().build();
     }
 }

@@ -1,6 +1,6 @@
-package com.marco.api.medico;
+package com.marco.api.domain.medico;
 
-import com.marco.api.endereco.DadosEndereco;
+import com.marco.api.domain.endereco.DadosEndereco;
 import jakarta.validation.constraints.NotNull;
 
 public record DadosAtualizarMedico(

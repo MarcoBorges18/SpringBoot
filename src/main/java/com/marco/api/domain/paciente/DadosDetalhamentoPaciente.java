@@ -1,6 +1,6 @@
-package com.marco.api.paciente;
+package com.marco.api.domain.paciente;
 
-import com.marco.api.endereco.Endereco;
+import com.marco.api.domain.endereco.Endereco;
 
 public record DadosDetalhamentoPaciente(Integer id, String nome, String email, String cpf, String telefone, Endereco endereco) {
 

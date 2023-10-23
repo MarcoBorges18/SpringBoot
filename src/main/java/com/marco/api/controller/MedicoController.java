@@ -1,6 +1,9 @@
 package com.marco.api.controller;
 
-import com.marco.api.medico.*;
+import com.marco.api.domain.medico.DadosListagemMedico;
+import com.marco.api.domain.medico.Medico;
+import com.marco.api.domain.medico.MedicoRepository;
+import com.marco.api.domain.medico.*;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,36 +47,23 @@ public class MedicoController{
     @GetMapping("/{id}")
     public ResponseEntity listarUmMedico(@PathVariable Integer id){
         var medico = repository.getReferenceById(id);
-        if(medico.getAtivo()){
-            return ResponseEntity.ok(new DadosListagemMedico(medico));
-        }else{
-            return ResponseEntity.notFound().build();
-        }
+        return ResponseEntity.ok(new DadosListagemMedico(medico));
     }
 
     @PutMapping
     @Transactional
     public ResponseEntity atualizar(@RequestBody @Valid DadosAtualizarMedico dados){
         var medico = repository.getReferenceById(dados.id());
-        if(medico.getAtivo()){
-            medico.atualizarInformacoes(dados);
-            return ResponseEntity.ok(new DadosDetalhamentoMedico(medico));
-            //ResponseEntity.ok retorna o valor 200 no HTTP, adicionar os parâmetros dentro dele faz com que tenha retorno no body
-        }else{
-            return ResponseEntity.notFound().build();
-        }
+        medico.atualizarInformacoes(dados);
+        return ResponseEntity.ok(new DadosDetalhamentoMedico(medico));
     }
 
     @PutMapping("{id}")
     @Transactional
     public ResponseEntity ativarMedico(@PathVariable Integer id){
         Medico medico = repository.getReferenceById(id);
-        if(!medico.getAtivo()){
-            medico.ativar();
-            return ResponseEntity.ok(new DadosDetalhamentoMedico(medico));
-        }else{
-            return ResponseEntity.notFound().build();
-        }
+        medico.ativar();
+        return ResponseEntity.ok(new DadosDetalhamentoMedico(medico));
     }
 
     @DeleteMapping("/{id}")

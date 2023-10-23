@@ -1,7 +1,6 @@
-package com.marco.api.paciente;
+package com.marco.api.domain.paciente;
 
-import com.marco.api.endereco.DadosEndereco;
-import com.marco.api.endereco.Endereco;
+import com.marco.api.domain.endereco.DadosEndereco;
 import jakarta.validation.Valid;
 
 public record DadosAtualizarPaciente(Integer id, String nome, String telefone, @Valid DadosEndereco endereco) {

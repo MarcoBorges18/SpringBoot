@@ -1,4 +1,4 @@
-package com.marco.api.medico;
+package com.marco.api.domain.medico;
 
 public enum Especialidade {
 

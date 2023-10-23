@@ -1,4 +1,4 @@
-package com.marco.api.plano;
+package com.marco.api.domain.plano;
 
 import jakarta.validation.constraints.NotNull;
 
