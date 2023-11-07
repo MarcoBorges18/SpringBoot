@@ -1,6 +1,7 @@
 package com.marco.api.domain.paciente;
 
 import com.marco.api.domain.endereco.Endereco;
+import com.marco.api.domain.plano.PlanoDeSaude;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -25,6 +26,10 @@ public class Paciente {
     @Embedded
     private Endereco endereco;
     private Boolean ativo;
+
+    @OneToOne
+    @JoinColumn(name = "Plano_de_Saude", referencedColumnName = "id")
+    private PlanoDeSaude plano;
 
     public Paciente(DadosCadastroPaciente dados){
         this.nome = dados.nome();

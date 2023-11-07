@@ -1,6 +1,7 @@
 package com.marco.api.domain.plano;
 
 
+import com.marco.api.domain.paciente.Paciente;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,6 +22,10 @@ public class PlanoDeSaude {
     private Double valorDoPlano;
     private Double desconto;
     private Boolean disponivel;
+
+    @JoinColumn(name = "pacientes", referencedColumnName = "id")
+    @OneToOne
+    private Paciente paciente;
 
     public PlanoDeSaude(DadosCadastroPlano dados){
         this.nome = dados.nome();
